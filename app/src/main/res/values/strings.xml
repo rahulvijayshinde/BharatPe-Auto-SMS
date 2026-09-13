@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BharatPe Auto SMS</string>
+
+    <!-- Permissions -->
+    <string name="permission_notification_access">Notification Access</string>
+    <string name="permission_sms">SMS Permission</string>
+    <string name="permission_phone_state">Phone State</string>
+    <string name="permission_battery">Battery Unrestricted</string>
+    <string name="permission_granted">Granted</string>
+    <string name="permission_not_granted">Not Granted</string>
+    <string name="grant_permission">Grant</string>
+
+    <!-- Main Screen -->
+    <string name="automation">Automation</string>
+    <string name="automation_on">Automatic SMS: Enabled</string>
+    <string name="automation_off">Automatic SMS: Disabled (Paused)</string>
+    <string name="recipient_number">Recipient Number</string>
+    <string name="recipient_hint">+91 XXXXXXXXXX</string>
+    <string name="recipient_description">JioBharat phone number to receive payment SMS</string>
+    <string name="sms_template">SMS Template</string>
+    <string name="template_hint">Use {amount} as placeholder</string>
+    <string name="sms_sim">SMS SIM Card</string>
+    <string name="sim_default">Default (System)</string>
+    <string name="last_payment">Last Payment</string>
+    <string name="sms_sent">SMS Sent ✓</string>
+    <string name="sms_failed">SMS Failed ✕</string>
+    <string name="test_sms">Test SMS</string>
+    <string name="history">History</string>
+
+    <!-- History Screen -->
+    <string name="transaction_history">Transaction History</string>
+    <string name="no_transactions">No transactions yet</string>
+    <string name="no_transactions_description">Payment notifications will appear here</string>
+    <string name="clear_history">Clear History</string>
+    <string name="clear_history_confirm">Delete all transaction records? This cannot be undone.</string>
+    <string name="clear_all">Clear All</string>
+    <string name="cancel">Cancel</string>
+    <string name="total">Total</string>
+    <string name="sent">Sent</string>
+    <string name="failed">Failed</string>
+    <string name="pending">Pending</string>
+    <string name="awaiting_confirmation">Awaiting Confirmation</string>
+
+    <!-- Settings Screen -->
+    <string name="settings">Settings</string>
+    <string name="confirmation_mode">Confirmation Mode</string>
+    <string name="confirmation_description">Require manual approval for first few transactions</string>
+    <string name="duplicate_protection">Duplicate Protection</string>
+    <string name="bharatpe_package">BharatPe Package Name</string>
+    <string name="auto_detect">Auto Detect</string>
+    <string name="save">Save</string>
+    <string name="test_parser">Test Parser</string>
+    <string name="test_parser_description">Paste a BharatPe notification text to test if it would trigger an SMS</string>
+    <string name="test">Test</string>
+    <string name="built_in_tests">Built-in Test Cases</string>
+
+    <!-- Xiaomi Setup Guide -->
+    <string name="xiaomi_guide_title">Xiaomi / Redmi Setup Guide</string>
+    <string name="step_autostart">Enable Autostart</string>
+    <string name="step_battery">Disable Battery Optimization</string>
+    <string name="step_lock">Lock App in Recent Apps</string>
+    <string name="step_notification">Grant Notification Access</string>
+    <string name="step_background">MIUI Background Activity</string>
+    <string name="step_sms_permission">Enable SMS Permission</string>
+
+    <!-- Notification Channels -->
+    <string name="channel_service_name">Service Status</string>
+    <string name="channel_service_description">Shows when the payment monitoring service is active</string>
+    <string name="channel_alerts_name">Payment Alerts</string>
+    <string name="channel_alerts_description">Notifications about processed payments and SMS status</string>
+    <string name="channel_confirm_name">Payment Confirmation</string>
+    <string name="channel_confirm_description">Confirm before sending SMS (during confirmation mode)</string>
+
+    <!-- Notifications -->
+    <string name="notif_monitoring">Monitoring for BharatPe payments</string>
+    <string name="notif_sms_sent">SMS Sent ✓</string>
+    <string name="notif_sms_failed">SMS Failed ✕</string>
+    <string name="notif_confirm_title">Confirm: ₹%s Received</string>
+    <string name="notif_confirm_send">Send ✓</string>
+    <string name="notif_confirm_skip">Skip ✕</string>
+
+    <!-- Errors -->
+    <string name="error_no_recipient">No recipient number configured</string>
+    <string name="error_automation_disabled">Automation disabled</string>
+    <string name="error_sms_permission">SMS permission not granted</string>
+    <string name="error_invalid_number">Invalid phone number</string>
+</resources>

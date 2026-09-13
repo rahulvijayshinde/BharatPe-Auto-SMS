@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108"
+    android:tint="#FFFFFF">
+
+    <!-- Background circle (safe zone: 66dp centered) -->
+    <!-- SMS envelope icon with ₹ symbol -->
+
+    <!-- Envelope body -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M27,36 L81,36 C83.2,36 85,37.8 85,40 L85,68 C85,70.2 83.2,72 81,72 L27,72 C24.8,72 23,70.2 23,68 L23,40 C23,37.8 24.8,36 27,36 Z" />
+
+    <!-- Envelope flap -->
+    <path
+        android:fillColor="#BBDEFB"
+        android:pathData="M23,40 L54,56 L85,40"
+        android:strokeWidth="2"
+        android:strokeColor="#1565C0" />
+
+    <!-- Envelope outline -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M27,36 L81,36 C83.2,36 85,37.8 85,40 L85,68 C85,70.2 83.2,72 81,72 L27,72 C24.8,72 23,70.2 23,68 L23,40 C23,37.8 24.8,36 27,36 Z"
+        android:strokeWidth="2"
+        android:strokeColor="#1565C0" />
+
+    <!-- Rupee symbol ₹ inside envelope -->
+    <path
+        android:fillColor="#1565C0"
+        android:pathData="M46,48 L62,48 M46,52 L62,52 M50,48 L50,64 M50,52 L58,64"
+        android:strokeWidth="2.5"
+        android:strokeColor="#1565C0"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+
+</vector>

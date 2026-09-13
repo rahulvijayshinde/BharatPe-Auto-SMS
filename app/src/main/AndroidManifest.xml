@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- SMS sending permission -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <!-- Dual SIM detection -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!-- Notifications on Android 13+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Restart after reboot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Keep service alive during SMS send -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Package visibility queries for Android 11+ (API 30+) -->
+    <queries>
+        <package android:name="com.bharatpe.app" />
+        <package android:name="com.bharatpe.business" />
+        <package android:name="com.bharatpe.merchant" />
+        <package android:name="com.bharatpe" />
+    </queries>
+
+    <application
+        android:name=".BharatPeAutoSmsApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BharatPeAutoSms">
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.BharatPeAutoSms">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Notification Listener Service -->
+        <service
+            android:name=".service.PaymentNotificationListener"
+            android:exported="false"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <!-- Boot Completed Receiver -->
+        <receiver
+            android:name=".service.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <!-- Xiaomi-specific boot action -->
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Confirmation Action Receiver -->
+        <receiver
+            android:name=".service.ConfirmationReceiver"
+            android:exported="false" />
+
+    </application>
+</manifest>
