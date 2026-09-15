@@ -33,13 +33,49 @@ object AmountFormatter {
     }
 
     /**
-     * Apply the SMS template, replacing {amount} with the formatted amount.
+     * Apply the SMS template, replacing {amount} with formatted amount
+     * and {name} / {sender} with the sender/customer name.
      *
-     * Default template: "{amount}₹ Received"
-     * Example: format("20") with default → "20₹ Received"
+     * If the template does not explicitly contain {name}, and a valid sender name
+     * is provided, it automatically appends " From <senderName>".
+     *
+     * Examples:
+     *   applyTemplate("{amount}₹ Received From {name}", "20", "RINKAL RAVINDR CHAURPAGAR")
+     *     → "20₹ Received From RINKAL RAVINDR CHAURPAGAR"
+     *   applyTemplate("{amount}₹ Received", "20", "RINKAL RAVINDR CHAURPAGAR")
+     *     → "20₹ Received From RINKAL RAVINDR CHAURPAGAR"
+     *   applyTemplate("{amount}₹ Received From {name}", "20", "")
+     *     → "20₹ Received"
      */
-    fun applyTemplate(template: String, formattedAmount: String): String {
-        return template.replace("{amount}", formattedAmount)
+    fun applyTemplate(
+        template: String,
+        formattedAmount: String,
+        senderName: String = ""
+    ): String {
+        var result = template.replace("{amount}", formattedAmount)
+        val cleanSender = senderName.trim()
+
+        if (cleanSender.isNotBlank()) {
+            if (result.contains("{name}")) {
+                result = result.replace("{name}", cleanSender)
+            } else if (result.contains("{sender}")) {
+                result = result.replace("{sender}", cleanSender)
+            } else {
+                result = "$result From $cleanSender"
+            }
+        } else {
+            // Clean up any dangling placeholders if no sender name is available
+            result = result
+                .replace(" From {name}", "")
+                .replace(" from {name}", "")
+                .replace(" From {sender}", "")
+                .replace(" from {sender}", "")
+                .replace("{name}", "")
+                .replace("{sender}", "")
+                .trim()
+        }
+
+        return result
     }
 
     /**

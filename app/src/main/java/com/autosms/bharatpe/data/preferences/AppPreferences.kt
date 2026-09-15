@@ -19,10 +19,14 @@ class AppPreferences(context: Context) {
         set(value) = prefs.edit().putString(Constants.PREF_RECIPIENT_NUMBER, value).apply()
 
     var smsTemplate: String
-        get() = prefs.getString(
-            Constants.PREF_SMS_TEMPLATE,
-            Constants.DEFAULT_SMS_TEMPLATE
-        ) ?: Constants.DEFAULT_SMS_TEMPLATE
+        get() {
+            val saved = prefs.getString(Constants.PREF_SMS_TEMPLATE, null)
+            return if (saved == null || saved == "{amount}₹ Received" || saved == "₹{amount} Received") {
+                Constants.DEFAULT_SMS_TEMPLATE
+            } else {
+                saved
+            }
+        }
         set(value) {
             val template = value.ifBlank { Constants.DEFAULT_SMS_TEMPLATE }
             prefs.edit().putString(Constants.PREF_SMS_TEMPLATE, template).apply()

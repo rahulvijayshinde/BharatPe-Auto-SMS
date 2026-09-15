@@ -126,10 +126,11 @@ class PaymentNotificationListener : NotificationListenerService() {
             return
         }
 
-        // STEP 8: Format SMS message
+        // STEP 8: Format SMS message (includes sender name)
         val smsMessage = AmountFormatter.applyTemplate(
             preferences.smsTemplate,
-            paymentInfo.formattedAmount
+            paymentInfo.formattedAmount,
+            paymentInfo.senderName
         )
 
         // STEP 9: Send SMS automatically in background with wake lock (ZERO MANUAL CONFIRMATION)

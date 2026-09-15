@@ -21,8 +21,12 @@ class NotificationParserTest {
         assertEquals("20", info.formattedAmount)
         assertEquals("RINKAL RAVINDR CHAURPAGAR", info.senderName)
 
-        val sms = AmountFormatter.applyTemplate("{amount}₹ Received", info.formattedAmount)
-        assertEquals("20₹ Received", sms)
+        val sms = AmountFormatter.applyTemplate(Constants.DEFAULT_SMS_TEMPLATE, info.formattedAmount, info.senderName)
+        assertEquals("20₹ Received From RINKAL RAVINDR CHAURPAGAR.", sms)
+
+        // Verify auto-append when template has no {name} placeholder
+        val smsLegacy = AmountFormatter.applyTemplate("{amount}₹ Received", info.formattedAmount, info.senderName)
+        assertEquals("20₹ Received From RINKAL RAVINDR CHAURPAGAR", smsLegacy)
     }
 
     @Test
@@ -34,8 +38,8 @@ class NotificationParserTest {
         assertEquals("1", info.formattedAmount)
         assertEquals("Miss DISHA SURESH RANDIVE", info.senderName)
 
-        val sms = AmountFormatter.applyTemplate("{amount}₹ Received", info.formattedAmount)
-        assertEquals("1₹ Received", sms)
+        val sms = AmountFormatter.applyTemplate(Constants.DEFAULT_SMS_TEMPLATE, info.formattedAmount, info.senderName)
+        assertEquals("1₹ Received From Miss DISHA SURESH RANDIVE.", sms)
     }
 
     @Test

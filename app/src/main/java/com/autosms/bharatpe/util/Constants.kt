@@ -29,7 +29,7 @@ object Constants {
     const val PREF_DUPLICATE_WINDOW_MINUTES = "duplicate_window_minutes"
 
     // Defaults
-    const val DEFAULT_SMS_TEMPLATE = "{amount}₹ Received"
+    const val DEFAULT_SMS_TEMPLATE = "{amount}₹ Received From {name}."
     const val DEFAULT_CONFIRMATION_THRESHOLD = 5
     const val DEFAULT_DUPLICATE_WINDOW_MINUTES = 30
     const val DEFAULT_SIM_SLOT = -1 // System default

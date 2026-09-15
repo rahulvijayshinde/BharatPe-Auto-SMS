@@ -151,7 +151,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val recipient = preferences.recipientNumber
             val template = preferences.smsTemplate
-            val testMessage = AmountFormatter.applyTemplate(template, "1")
+            val testMessage = AmountFormatter.applyTemplate(template, "1", "TEST SENDER")
 
             val result = smsSender.sendSms(
                 recipientNumber = recipient,
@@ -175,7 +175,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val result = NotificationParser.testParse(text)
         val resultText = if (result != null) {
             "✓ MATCH: Amount = ₹${result.formattedAmount}, Sender = ${result.senderName}\n" +
-            "SMS would be: ${AmountFormatter.applyTemplate(preferences.smsTemplate, result.formattedAmount)}"
+            "SMS would be: ${AmountFormatter.applyTemplate(preferences.smsTemplate, result.formattedAmount, result.senderName)}"
         } else {
             "✕ NO MATCH: This notification would NOT trigger an SMS."
         }

@@ -1,6 +1,6 @@
 # BharatPe Auto SMS 📱➡️📲
 
-An automated, background-first native Android utility that detects incoming **BharatPe for Business** payment notifications and immediately forwards a customizable SMS receipt (e.g., `"20₹ Received"`) to a secondary phone (such as a JioBharat keypad phone) with **zero manual intervention**.
+An automated, background-first native Android utility that detects incoming **BharatPe for Business** payment notifications and immediately forwards a customizable SMS receipt (e.g., `"20₹ Received From RINKAL RAVINDR CHAURPAGAR."`) to a secondary phone (such as a JioBharat keypad phone) with **zero manual intervention**.
 
 ---
 

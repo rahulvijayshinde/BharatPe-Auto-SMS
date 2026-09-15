@@ -19,7 +19,7 @@
     <string name="recipient_hint">+91 XXXXXXXXXX</string>
     <string name="recipient_description">JioBharat phone number to receive payment SMS</string>
     <string name="sms_template">SMS Template</string>
-    <string name="template_hint">Use {amount} as placeholder</string>
+    <string name="template_hint">Use {amount} and {name} as placeholders</string>
     <string name="sms_sim">SMS SIM Card</string>
     <string name="sim_default">Default (System)</string>
     <string name="last_payment">Last Payment</string>

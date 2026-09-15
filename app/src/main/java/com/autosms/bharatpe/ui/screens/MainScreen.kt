@@ -2,6 +2,7 @@ package com.autosms.bharatpe.ui.screens
 
 import android.Manifest
 import android.content.Intent
+import com.autosms.bharatpe.parser.AmountFormatter
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.animateColorAsState
@@ -333,13 +334,13 @@ fun MainScreen(
                             viewModel.updateSmsTemplate(it)
                         },
                         modifier = Modifier.fillMaxWidth(),
-                        label = { Text("Use {amount} as placeholder") },
+                        label = { Text("Use {amount} and {name} as placeholders") },
                         singleLine = true,
                         shape = RoundedCornerShape(12.dp)
                     )
 
                     Text(
-                        "Preview: ${templateInput.replace("{amount}", "250")}",
+                        "Preview: ${AmountFormatter.applyTemplate(templateInput, "250", "RINKAL RAVINDR CHAURPAGAR")}",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.primary
                     )
