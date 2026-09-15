@@ -36,6 +36,7 @@ data class MainUiState(
     val bharatPePackage: String = "",
     val bharatPeDetectedApps: List<PackageDetector.DetectedApp> = emptyList(),
     val confirmationMode: Boolean = true,
+    val marathiNameEnabled: Boolean = true,
     val lastTestResult: String? = null,
     val parserTestResult: String? = null,
     val isConfigured: Boolean = false
@@ -93,6 +94,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             bharatPePackage = preferences.bharatPePackage,
             bharatPeDetectedApps = PackageDetector.detectBharatPeApps(context),
             confirmationMode = preferences.confirmationMode,
+            marathiNameEnabled = preferences.marathiNameEnabled,
             isConfigured = preferences.isConfigured()
         )
     }
@@ -144,6 +146,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _uiState.value = _uiState.value.copy(confirmationMode = enabled)
     }
 
+    fun toggleMarathiName(enabled: Boolean) {
+        preferences.marathiNameEnabled = enabled
+        _uiState.value = _uiState.value.copy(marathiNameEnabled = enabled)
+    }
+
     /**
      * Send a test SMS to verify the configuration.
      */
@@ -151,7 +158,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val recipient = preferences.recipientNumber
             val template = preferences.smsTemplate
-            val testMessage = AmountFormatter.applyTemplate(template, "1", "TEST SENDER")
+            val testMessage = AmountFormatter.applyTemplate(
+                template = template,
+                formattedAmount = "1",
+                senderName = "RINKAL RAVINDR CHAURPAGAR",
+                convertToMarathi = preferences.marathiNameEnabled
+            )
 
             val result = smsSender.sendSms(
                 recipientNumber = recipient,
@@ -175,7 +187,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val result = NotificationParser.testParse(text)
         val resultText = if (result != null) {
             "✓ MATCH: Amount = ₹${result.formattedAmount}, Sender = ${result.senderName}\n" +
-            "SMS would be: ${AmountFormatter.applyTemplate(preferences.smsTemplate, result.formattedAmount, result.senderName)}"
+            "SMS would be: ${AmountFormatter.applyTemplate(preferences.smsTemplate, result.formattedAmount, result.senderName, preferences.marathiNameEnabled)}"
         } else {
             "✕ NO MATCH: This notification would NOT trigger an SMS."
         }

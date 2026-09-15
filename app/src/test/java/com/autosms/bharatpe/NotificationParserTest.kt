@@ -1,6 +1,7 @@
 package com.autosms.bharatpe
 
 import com.autosms.bharatpe.parser.AmountFormatter
+import com.autosms.bharatpe.parser.MarathiTransliterator
 import com.autosms.bharatpe.parser.NotificationParser
 import com.autosms.bharatpe.util.Constants
 import org.junit.Assert.assertEquals
@@ -21,11 +22,14 @@ class NotificationParserTest {
         assertEquals("20", info.formattedAmount)
         assertEquals("RINKAL RAVINDR CHAURPAGAR", info.senderName)
 
-        val sms = AmountFormatter.applyTemplate(Constants.DEFAULT_SMS_TEMPLATE, info.formattedAmount, info.senderName)
+        val sms = AmountFormatter.applyTemplate(Constants.DEFAULT_SMS_TEMPLATE, info.formattedAmount, info.senderName, convertToMarathi = false)
         assertEquals("20₹ Received From RINKAL RAVINDR CHAURPAGAR.", sms)
 
+        val smsMarathi = AmountFormatter.applyTemplate(Constants.DEFAULT_SMS_TEMPLATE, info.formattedAmount, info.senderName, convertToMarathi = true)
+        assertEquals("20₹ Received From रिंकल रवींद्र चौरपगार.", smsMarathi)
+
         // Verify auto-append when template has no {name} placeholder
-        val smsLegacy = AmountFormatter.applyTemplate("{amount}₹ Received", info.formattedAmount, info.senderName)
+        val smsLegacy = AmountFormatter.applyTemplate("{amount}₹ Received", info.formattedAmount, info.senderName, convertToMarathi = false)
         assertEquals("20₹ Received From RINKAL RAVINDR CHAURPAGAR", smsLegacy)
     }
 
@@ -38,8 +42,11 @@ class NotificationParserTest {
         assertEquals("1", info.formattedAmount)
         assertEquals("Miss DISHA SURESH RANDIVE", info.senderName)
 
-        val sms = AmountFormatter.applyTemplate(Constants.DEFAULT_SMS_TEMPLATE, info.formattedAmount, info.senderName)
+        val sms = AmountFormatter.applyTemplate(Constants.DEFAULT_SMS_TEMPLATE, info.formattedAmount, info.senderName, convertToMarathi = false)
         assertEquals("1₹ Received From Miss DISHA SURESH RANDIVE.", sms)
+
+        val smsMarathi = AmountFormatter.applyTemplate(Constants.DEFAULT_SMS_TEMPLATE, info.formattedAmount, info.senderName, convertToMarathi = true)
+        assertEquals("1₹ Received From दिशा सुरेश रणदिवे.", smsMarathi)
     }
 
     @Test
@@ -130,5 +137,54 @@ class NotificationParserTest {
         assertNotEquals("Different sender must produce different hash", hash1, hashDifferentSender)
         assertNotEquals("Different amount must produce different hash", hash1, hashDifferentAmount)
         assertNotEquals("Different time bucket must produce different hash", hash1, hashDifferentTime)
+    }
+
+    @Test
+    fun testMarathiTransliteratorKnownNames() {
+        val rinkalMarathi = MarathiTransliterator.toMarathi("RINKAL RAVINDR CHAURPAGAR")
+        assertEquals("रिंकल रवींद्र चौरपगार", rinkalMarathi)
+
+        val dishaMarathi = MarathiTransliterator.toMarathi("Miss DISHA SURESH RANDIVE")
+        assertEquals("दिशा सुरेश रणदिवे", dishaMarathi)
+
+        val rahulMarathi = MarathiTransliterator.toMarathi("RAHUL VIJAY SHINDE")
+        assertEquals("राहुल विजय शिंदे", rahulMarathi)
+    }
+
+    @Test
+    fun testAmountFormatterWithMarathiTemplate() {
+        // Notification 1: Rinkal
+        val text1 = "Received 20.00 Rupees From RINKAL RAVINDR CHAURPAGAR."
+        val info1 = NotificationParser.testParse(text1)
+        assertNotNull(info1)
+
+        val smsMarathi1 = AmountFormatter.applyTemplate(
+            template = Constants.DEFAULT_SMS_TEMPLATE,
+            formattedAmount = info1!!.formattedAmount,
+            senderName = info1.senderName,
+            convertToMarathi = true
+        )
+        assertEquals("20₹ Received From रिंकल रवींद्र चौरपगार.", smsMarathi1)
+
+        val smsEnglish1 = AmountFormatter.applyTemplate(
+            template = Constants.DEFAULT_SMS_TEMPLATE,
+            formattedAmount = info1.formattedAmount,
+            senderName = info1.senderName,
+            convertToMarathi = false
+        )
+        assertEquals("20₹ Received From RINKAL RAVINDR CHAURPAGAR.", smsEnglish1)
+
+        // Notification 2: Disha
+        val text2 = "Received 1.00 Rupees From Miss DISHA SURESH RANDIVE."
+        val info2 = NotificationParser.testParse(text2)
+        assertNotNull(info2)
+
+        val smsMarathi2 = AmountFormatter.applyTemplate(
+            template = Constants.DEFAULT_SMS_TEMPLATE,
+            formattedAmount = info2!!.formattedAmount,
+            senderName = info2.senderName,
+            convertToMarathi = true
+        )
+        assertEquals("1₹ Received From दिशा सुरेश रणदिवे.", smsMarathi2)
     }
 }

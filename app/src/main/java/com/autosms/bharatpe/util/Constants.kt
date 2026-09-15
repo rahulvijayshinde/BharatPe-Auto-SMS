@@ -27,6 +27,7 @@ object Constants {
     const val PREF_CONFIRMATION_MODE = "confirmation_mode"
     const val PREF_CONFIRMATION_THRESHOLD = "confirmation_threshold"
     const val PREF_DUPLICATE_WINDOW_MINUTES = "duplicate_window_minutes"
+    const val PREF_MARATHI_NAME_ENABLED = "marathi_name_enabled"
 
     // Defaults
     const val DEFAULT_SMS_TEMPLATE = "{amount}₹ Received From {name}."

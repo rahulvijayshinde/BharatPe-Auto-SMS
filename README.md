@@ -19,6 +19,7 @@ Small merchants and shopkeepers frequently face this workflow challenge:
 ## 🚀 Key Features
 
 * **⚡ Zero Manual Confirmation**: Fully automated background operation. Once enabled, incoming genuine payments automatically trigger the SMS without requiring app opens, taps, dialogs, or confirmation clicks.
+* **🌐 Marathi Name Transliteration (मराठी नाव रूपांतरण)**: Built-in 100% offline hybrid transliteration engine (150+ curated Marathi dictionary + rule-based phonetic engine) that converts English customer names into Marathi Devanagari script (e.g., `RINKAL RAVINDR CHAURPAGAR` → `रिंकल रवींद्र चौरपगार`, `Miss DISHA SURESH RANDIVE` → `दिशा सुरेश रणदिवे`). Supports UCS-2 Unicode multi-part SMS for keypad phones (such as JioBharat).
 * **🎯 Strict Regex Payment Parser**: Accurately extracts payment amounts and sender names (e.g., `Received 20.00 Rupees From RINKAL RAVINDR CHAURPAGAR.`). Employs negative filtering to safely reject promotional notices, cashback alerts, daily greetings, and KYC reminders.
 * **🛡️ Triple-Layer Duplicate Protection**:
   * *Layer 1*: In-memory LRU cache for rapid successive system notification deliveries.
@@ -39,8 +40,9 @@ com.autosms.bharatpe
 │   ├── preferences/        SharedPreferences wrapper for settings
 │   └── repository/         Repository layer with reactive Kotlin Flows
 ├── parser/
-│   ├── NotificationParser  Strict payment regex matching & negative pattern filters
-│   └── AmountFormatter     Currency formatting (whole & fractional rupees)
+│   ├── NotificationParser      Strict payment regex matching & negative pattern filters
+│   ├── AmountFormatter         Currency formatting & SMS template processor
+│   └── MarathiTransliterator   100% offline Latin to Marathi Devanagari transliterator
 ├── duplicate/
 │   └── DuplicateDetector   SHA-256 time-bucket hash generation & LRU caching
 ├── service/

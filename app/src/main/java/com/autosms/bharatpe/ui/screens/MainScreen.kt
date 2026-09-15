@@ -339,9 +339,33 @@ fun MainScreen(
                         shape = RoundedCornerShape(12.dp)
                     )
 
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                "Convert Name to Marathi (मराठी नाव)",
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.Medium
+                            )
+                            Text(
+                                "Translates customer name to Marathi Devanagari in SMS",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Switch(
+                            checked = uiState.marathiNameEnabled,
+                            onCheckedChange = { viewModel.toggleMarathiName(it) }
+                        )
+                    }
+
                     Text(
-                        "Preview: ${AmountFormatter.applyTemplate(templateInput, "250", "RINKAL RAVINDR CHAURPAGAR")}",
+                        "Preview: ${AmountFormatter.applyTemplate(templateInput, "250", "RINKAL RAVINDR CHAURPAGAR", uiState.marathiNameEnabled)}",
                         style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.primary
                     )
                 }

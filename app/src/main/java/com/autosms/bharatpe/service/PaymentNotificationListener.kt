@@ -126,11 +126,12 @@ class PaymentNotificationListener : NotificationListenerService() {
             return
         }
 
-        // STEP 8: Format SMS message (includes sender name)
+        // STEP 8: Format SMS message (includes sender name, transliterated to Marathi if enabled)
         val smsMessage = AmountFormatter.applyTemplate(
             preferences.smsTemplate,
             paymentInfo.formattedAmount,
-            paymentInfo.senderName
+            paymentInfo.senderName,
+            preferences.marathiNameEnabled
         )
 
         // STEP 9: Send SMS automatically in background with wake lock (ZERO MANUAL CONFIRMATION)

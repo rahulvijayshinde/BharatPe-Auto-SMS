@@ -40,28 +40,35 @@ object AmountFormatter {
      * is provided, it automatically appends " From <senderName>".
      *
      * Examples:
-     *   applyTemplate("{amount}₹ Received From {name}", "20", "RINKAL RAVINDR CHAURPAGAR")
-     *     → "20₹ Received From RINKAL RAVINDR CHAURPAGAR"
-     *   applyTemplate("{amount}₹ Received", "20", "RINKAL RAVINDR CHAURPAGAR")
-     *     → "20₹ Received From RINKAL RAVINDR CHAURPAGAR"
+     *   applyTemplate("{amount}₹ Received From {name}", "20", "RINKAL RAVINDR CHAURPAGAR", convertToMarathi = true)
+     *     → "20₹ Received From रिंकल रवींद्र चौरपगार"
+     *   applyTemplate("{amount}₹ Received", "20", "RINKAL RAVINDR CHAURPAGAR", convertToMarathi = true)
+     *     → "20₹ Received From रिंकल रवींद्र चौरपगार"
      *   applyTemplate("{amount}₹ Received From {name}", "20", "")
      *     → "20₹ Received"
      */
     fun applyTemplate(
         template: String,
         formattedAmount: String,
-        senderName: String = ""
+        senderName: String = "",
+        convertToMarathi: Boolean = true
     ): String {
         var result = template.replace("{amount}", formattedAmount)
         val cleanSender = senderName.trim()
 
-        if (cleanSender.isNotBlank()) {
+        val processedName = if (convertToMarathi && cleanSender.isNotBlank()) {
+            MarathiTransliterator.toMarathi(cleanSender)
+        } else {
+            cleanSender
+        }
+
+        if (processedName.isNotBlank()) {
             if (result.contains("{name}")) {
-                result = result.replace("{name}", cleanSender)
+                result = result.replace("{name}", processedName)
             } else if (result.contains("{sender}")) {
-                result = result.replace("{sender}", cleanSender)
+                result = result.replace("{sender}", processedName)
             } else {
-                result = "$result From $cleanSender"
+                result = "$result From $processedName"
             }
         } else {
             // Clean up any dangling placeholders if no sender name is available

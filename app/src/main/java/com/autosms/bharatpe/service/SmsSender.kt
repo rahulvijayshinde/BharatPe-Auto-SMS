@@ -185,15 +185,30 @@ class SmsSender(private val context: Context) {
                         }
                     }
 
-                    // Actually send the SMS
+                    // Actually send the SMS (supports Unicode Devanagari multi-part messages)
                     try {
-                        smsManager.sendTextMessage(
-                            cleanNumber,
-                            null,      // service center (null = default)
-                            message,
-                            sentPendingIntent,
-                            null       // delivery intent (not needed)
-                        )
+                        val parts = smsManager.divideMessage(message)
+                        if (parts.size > 1) {
+                            val sentIntents = ArrayList<PendingIntent?>()
+                            for (i in parts.indices) {
+                                sentIntents.add(if (i == 0) sentPendingIntent else null)
+                            }
+                            smsManager.sendMultipartTextMessage(
+                                cleanNumber,
+                                null,
+                                parts,
+                                sentIntents,
+                                null
+                            )
+                        } else {
+                            smsManager.sendTextMessage(
+                                cleanNumber,
+                                null,
+                                message,
+                                sentPendingIntent,
+                                null
+                            )
+                        }
                     } catch (e: Exception) {
                         try {
                             context.unregisterReceiver(sentReceiver)

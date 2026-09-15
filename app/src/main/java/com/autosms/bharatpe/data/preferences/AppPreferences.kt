@@ -58,6 +58,10 @@ class AppPreferences(context: Context) {
         )
         set(value) = prefs.edit().putInt(Constants.PREF_DUPLICATE_WINDOW_MINUTES, value).apply()
 
+    var marathiNameEnabled: Boolean
+        get() = prefs.getBoolean(Constants.PREF_MARATHI_NAME_ENABLED, true)
+        set(value) = prefs.edit().putBoolean(Constants.PREF_MARATHI_NAME_ENABLED, value).apply()
+
     /** Check if the essential settings are configured */
     fun isConfigured(): Boolean {
         return recipientNumber.isNotBlank()

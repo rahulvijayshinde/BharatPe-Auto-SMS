@@ -123,6 +123,62 @@ fun SettingsScreen(
                 }
             }
 
+            // ─── Marathi Name Conversion ─────────────────────────────
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(20.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                "Marathi Name Conversion",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                            Text(
+                                "मराठी नाव रूपांतरण",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                        Switch(
+                            checked = uiState.marathiNameEnabled,
+                            onCheckedChange = { viewModel.toggleMarathiName(it) }
+                        )
+                    }
+
+                    Text(
+                        "Automatically converts customer names from English into Marathi Devanagari script for destination SMS.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 2.dp))
+
+                    Text(
+                        "Examples:",
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.SemiBold
+                    )
+
+                    Text(
+                        "• RINKAL RAVINDR CHAURPAGAR → रिंकल रवींद्र चौरपगार\n" +
+                        "• Miss DISHA SURESH RANDIVE → दिशा सुरेश रणदिवे\n" +
+                        "• RAHUL VIJAY SHINDE → राहुल विजय शिंदे",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+
             // ─── BharatPe Package ───────────────────────────────────
             Card(
                 modifier = Modifier.fillMaxWidth(),
